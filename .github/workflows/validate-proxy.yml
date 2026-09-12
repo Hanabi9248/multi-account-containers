@@ -1,0 +1,22 @@
+name: Validate proxy credentials
+on:
+  push:
+    branches: [codex/validate-proxy-credentials]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 2a4d83e62cdae8a80f1709535ea577862cdc6cf0
+          submodules: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm install --legacy-peer-deps
+      - run: npm test
+      - run: npm run build
